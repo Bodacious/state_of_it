@@ -27,7 +27,7 @@ module FeatureGraph
       store[feature_name] = feature_class_name
     end
 
-    def fetch_feature_class_name(feature_name)
+    def feature_class_name(feature_name)
       store[feature_name] || raise(UndefinedFeatureError,
                                    "There's no feature defined as #{feature_name}")
     end

@@ -49,8 +49,12 @@ module FeatureGraph
       raise NotImplementedError, "Please define #{__method__} in #{self}"
     end
 
-    def applied_to?(user)
-      raise NotImplementedError, "Please define #{__method__} in #{self}"
+    def applied_to?(_user)
+      false
     end
+
+    # def applied_to?(user)
+    #   raise NotImplementedError, "Please define #{__method__} in #{self}"
+    # end
   end
 end

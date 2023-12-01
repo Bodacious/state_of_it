@@ -7,27 +7,26 @@ module FeatureGraph
     alias sorted_feature_names tsort
     private :tsort
 
-    def initialize(dependencies)
-      @dependencies = dependencies
+    def initialize
       @store = Hash.new { |hash, key| hash[key] = Set.new }
-
-      store_dependency_structure!
     end
 
     def sorted_features
       sorted_feature_names.map { Object.const_get("#{_1}_feature".classify) }
     end
 
+    def add(feature_name, dependencies)
+      store[feature_name]
+      store[feature_name] += dependencies.map(&:dependency)
+    end
+
+    def each(&block)
+      sorted_features.each(&block)
+    end
+
     private
 
     attr_reader :dependencies, :store
-
-    def store_dependency_structure!
-      dependencies.each do |dependency|
-        store[dependency.dependent]
-        store[dependency.dependent].add(dependency.dependency)
-      end
-    end
 
     def tsort_each_node(&block)
       store.each_key(&block)
